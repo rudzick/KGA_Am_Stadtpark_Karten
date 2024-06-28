@@ -32,7 +32,7 @@ var vectorSource_Block_1 = new VectorSource({
     format: new GeoJSON(),
     
     url: function(extent, resolution, projection, success, failure) {
-        return 'https://www.kolonie-am-stadtpark.de/geoserver/wfs?service=WFS&' +
+        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
             'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:planet_osm_polygon:Block1&' +
             'outputFormat=application/json&srsname=EPSG:3857&' +
             'bbox=' + extent.join(',') + ',EPSG:3857';
@@ -44,7 +44,7 @@ var vectorSource_Block_1 = new VectorSource({
 var vectorSource_Block_2 = new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
-        return 'https://www.kolonie-am-stadtpark.de/geoserver/wfs?service=WFS&' +
+        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
             'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:planet_osm_polygon:Block_2&' +
             'outputFormat=application/json&srsname=EPSG:3857&' +
             'bbox=' + extent.join(',') + ',EPSG:3857';
@@ -57,7 +57,7 @@ var vectorSource_Block_2 = new VectorSource({
 var vectorSource_Block_3 = new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
-        return 'https://www.kolonie-am-stadtpark.de/geoserver/wfs?service=WFS&' +
+        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
             'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:planet_osm_polygon:Block_3&' +
             'outputFormat=application/json&srsname=EPSG:3857&' +
             'bbox=' + extent.join(',') + ',EPSG:3857';
@@ -69,7 +69,7 @@ var vectorSource_Block_3 = new VectorSource({
 var vectorSource_Vereinshaus = new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
-        return 'https://www.kolonie-am-stadtpark.de/geoserver/wfs?service=WFS&' +
+        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
             'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:Vereinshaus&' +
             'outputFormat=application/json&srsname=EPSG:3857&' +
             'bbox=' + extent.join(',') + ',EPSG:3857';
@@ -81,7 +81,7 @@ var vectorSource_Vereinshaus = new VectorSource({
 var vectorSource_Weg_zum_Vereinshaus = new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
-        return 'https://www.kolonie-am-stadtpark.de/geoserver/wfs?service=WFS&' +
+        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
             'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:Weg_zum_Vereinshaus&' +
             'outputFormat=application/json&srsname=EPSG:3857&' +
             'bbox=' + extent.join(',') + ',EPSG:3857';
