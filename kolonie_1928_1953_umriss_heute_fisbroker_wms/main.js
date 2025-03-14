@@ -6,8 +6,9 @@ import Projection from 'ol/proj/Projection';
 import TileWMS from 'ol/source/TileWMS';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import VectorSource from 'ol/source/Vector.js';
-import {bbox as bboxStrategy} from 'ol/loadingstrategy.js';
+import VectorTileSource from 'ol/source/VectorTile.js';
+import VectorTileLayer from 'ol/layer/VectorTile.js';
+import MVT from 'ol/format/MVT.js';
 import {Stroke, Fill, Circle, Style} from 'ol/style.js';
 import View from 'ol/View';
 import {ScaleLine,  Attribution, FullScreen, defaults as defaultControls} from 'ol/control';
@@ -29,7 +30,8 @@ var projectionETRS89 = new Projection({
   code: 'EPSG:25833',
   // The extent is used to determine zoom level 0. Recommended values for a
   // projection's validity extent can be found at https://epsg.io/.
-    extent: [-2465144.80, 4102893.55, 776625.76, 9408555.22],
+//    extent: [-2465144.80, 4102893.55, 776625.76, 9408555.22],
+   extent: [366919.0471291578, 5793125.017742313, 416682.64044311404, 5842888.611056269],
   units: 'm',
 });
 
@@ -37,33 +39,27 @@ var projectionETRS89 = new Projection({
 // are necessary for the ScaleLine control and when calling ol/proj~transform
 // for setting the view's initial center (see below).
 
-var extentBerlin = [-2465144.80, 4102893.55, 776625.76, 9408555.22];
+//var extentBerlin = [-2465144.80, 4102893.55, 776625.76, 9408555.22];
+var extentBerlin = [366919.0471291578, 5793125.017742313, 416682.64044311404, 5842888.611056269];
 
-var vectorSource = new VectorSource({
-    format: new GeoJSON(),
-    url: function(extent) {
-        return 'https://mymapnik.rudzick.it/geoserver/wfs?service=WFS&' +
-            'version=1.1.0&request=GetFeature&typename=Kleingartenparzellen:planet_osm_polygon&' +
-            'outputFormat=application/json&srsname=EPSG:25833&' +
-            'bbox=' + extent.join(',') + ',EPSG:25833';
-    },
-    strategy: bboxStrategy
+var vectorTileSource = new VectorTileSource({
+    format: new MVT(),
+    projection: projectionETRS89,
+    url: 'https://pgtiles25833.obstbaumkarte.de/public.plots/{z}/{x}/{y}.pbf',
 });
 
-var vector = new VectorLayer({
-//    'title' : 'Heutiger Grundriss unserer Kolonie',
-    source: vectorSource,
+var vectorTile = new VectorTileLayer({
+    name: 'parzellengrenzen',
+    source: vectorTileSource,
+  //  projection: 'EPSG:25833',
+  minZoom: 6,
+  maxZoom: 12,
     style: new Style({
         stroke: new Stroke({
             color: 'rgba(189, 2, 64, 1.0)',
             width: 1
         }),
-//	fill: new Fill({
-//	    color: 'rgba(189, 2, 64, 0.3)'
-//	}),   
     }),
-    renderMode: vector,
-    updateWhileInteracting: true
 });
 
 var berlin1928 = new TileLayer({
@@ -537,7 +533,7 @@ var overlaysOSM = new LayerGroup({
     'title': 'Heutiger Grundriss unserer Kolonie (OSM)',
     combine: true,
     fold: 'closed',
-    layers: [vector]
+    layers: [vectorTile]
 });
 
 
@@ -557,7 +553,7 @@ var map = new Map({
         center: transform([13.3353000, 52.4833225], 'EPSG:4326', 'EPSG:25833'),
 //	center: [386956.39, 5816099.66],
         extent: extentBerlin,
-	zoom: 14,
+	zoom: 8,
   }),
 });
 
